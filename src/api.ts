@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { CITIES, SUPABASE_KEY, SUPABASE_URL } from "./config";
 import type { Stats, Weather } from "./lib/fortune";
 
-export const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false } });
+export const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "implicit" } });
 
 // 서버 오류 코드를 사람이 읽는 말로
 const MESSAGES: Record<string, string> = {
@@ -38,7 +38,7 @@ export type Profile = {
 export type FullStats = Stats & { total: number; recent20: number[]; odd: number[]; sum_avg: number; sum_mid: number; consec: number; first_auto: number; first_manual: number; first_semi: number };
 
 export const api = {
-  sendCode: async (email: string) => { const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true } }); if (error) throw new ApiError("OTP", error.message.includes("rate") ? "잠시 후 다시 요청해 주세요." : "메일을 보내지 못했어요. 주소를 확인해 주세요."); },
+  sendCode: async (email: string) => { const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: location.origin + location.pathname } }); if (error) throw new ApiError("OTP", error.message.includes("rate") ? "잠시 후 다시 요청해 주세요." : "메일을 보내지 못했어요. 주소를 확인해 주세요."); },
   verifyCode: async (email: string, token: string) => { const { error } = await sb.auth.verifyOtp({ email, token, type: "email" }); if (error) throw new ApiError("OTP", "인증번호가 맞지 않거나 시간이 지났어요."); },
   signOut: () => sb.auth.signOut(),
   profile: () => rpc<Profile | null>("my_fortune_profile"),

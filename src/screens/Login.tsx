@@ -12,7 +12,7 @@ export function Login() {
 
   const send = async () => {
     setBusy(true);
-    try { await api.sendCode(email.trim()); setSent(true); toast("인증번호를 메일로 보냈어요."); }
+    try { await api.sendCode(email.trim()); setSent(true); toast("로그인 메일을 보냈어요."); }
     catch (e: any) { toast(e.message); } finally { setBusy(false); }
   };
   const verify = async () => {
@@ -38,12 +38,16 @@ export function Login() {
             <label class="field">이메일
               <input class="input" type="email" inputMode="email" autoComplete="email" placeholder="name@example.com" value={email} onInput={(e) => setEmail((e.target as HTMLInputElement).value)} />
             </label>
-            <button class="btn lime" disabled={!adult || !validEmail || busy} onClick={send}>{busy ? "보내는 중…" : "인증번호 받기"}</button>
+            <button class="btn lime" disabled={!adult || !validEmail || busy} onClick={send}>{busy ? "보내는 중…" : "로그인 메일 받기"}</button>
           </>
         ) : (
           <>
-            <p class="sub">{email}로 보낸 6자리 숫자를 입력해 주세요.</p>
-            <label class="field">인증번호
+            <div class="card">
+              <h3>메일함을 확인해 주세요</h3>
+              <p class="sub">{email}로 보낸 메일의 <b style={{ color: "var(--lime)" }}>로그인 버튼</b>을 이 기기에서 누르면 바로 시작돼요. 메일에 숫자 인증번호가 있다면 아래에 입력해도 돼요.</p>
+              <p class="small">메일이 안 보이면 스팸함도 확인해 주세요.</p>
+            </div>
+            <label class="field">인증번호 (메일에 있을 때만)
               <input class="input num" inputMode="numeric" autoComplete="one-time-code" maxLength={8} value={code} onInput={(e) => setCode((e.target as HTMLInputElement).value.replace(/\D/g, ""))} style={{ fontSize: 22, letterSpacing: 6 }} />
             </label>
             <button class="btn lime" disabled={code.length < 6 || busy} onClick={verify}>{busy ? "확인 중…" : "시작하기"}</button>

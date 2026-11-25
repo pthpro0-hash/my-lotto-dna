@@ -17,7 +17,8 @@ import { Duo } from "./screens/Duo";
 import { Log } from "./screens/Log";
 
 function useRoute() {
-  const get = () => location.hash.replace(/^#\/?/, "") || "today";
+  // 로그인 메일 링크로 돌아오면 주소에 토큰(#access_token=…)이 붙음 → 화면 이름으로 쓰지 않음
+  const get = () => { const h = location.hash.replace(/^#\/?/, ""); return !h || h.includes("access_token") || h.includes("error") ? "today" : h; };
   const [r, setR] = useState(get());
   useEffect(() => { const f = () => { setR(get()); window.scrollTo(0, 0); }; addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
   return r;
