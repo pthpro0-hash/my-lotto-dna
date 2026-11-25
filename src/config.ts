@@ -24,8 +24,8 @@ export const CITIES: { id: string; name: string; lat: number; lon: number }[] = 
 
 // 개인정보처리방침에 표시할 운영자 정보. 값만 바꾸면 방침 화면에 바로 반영됩니다.
 export const PRIVACY = {
-  operator: "MY LOTTO DNA 운영자", // 개인 이름 또는 상호
-  officer: "MY LOTTO DNA 운영자", // 개인정보 보호책임자 이름
-  email: "", // 문의 메일. 비워 두면 '준비 중'으로 표시
+  operator: "앙드레박", // 개인 이름 또는 상호
+  officer: "앙드레박", // 개인정보 보호책임자 이름
+  email: "pthpro@naver.com", // 문의 메일. 비워 두면 '준비 중'으로 표시
   effective: "2026-11-26", // 시행일
 };

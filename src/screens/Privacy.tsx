@@ -16,7 +16,7 @@ export function Privacy({ back }: { back: string }) {
   return (
     <div class="page">
       <Back to={back} title="개인정보처리방침" />
-      <p class="sub">{PRIVACY.operator}(이하 '서비스')는 「개인정보 보호법」에 따라 이용자의 개인정보를 보호하고, 관련 고충을 빠르게 처리하기 위해 이 방침을 공개합니다. 서비스는 <b>꼭 필요한 정보만, 가능한 한 적게</b> 받습니다.</p>
+      <p class="sub">MY LOTTO DNA(운영자: {PRIVACY.operator}, 이하 '서비스')는 「개인정보 보호법」에 따라 이용자의 개인정보를 보호하고, 관련 고충을 빠르게 처리하기 위해 이 방침을 공개합니다. 서비스는 <b>꼭 필요한 정보만, 가능한 한 적게</b> 받습니다.</p>
 
       <Sec n={1} title="처리하는 개인정보와 목적">
         <table class="ptable">
