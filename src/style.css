@@ -86,3 +86,12 @@ p { margin: 0; }
 .toggle.on .knob { background: var(--lime); color: var(--bg); }
 video.scan { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 20px; background: #16161A; }
 .foot { text-align: center; font-size: 11px; color: var(--dim); line-height: 1.6; }
+.ptable { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.45; }
+.ptable th, .ptable td { text-align: left; vertical-align: top; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+.ptable th { color: var(--dim); font-weight: 700; font-size: 12px; }
+.ptable td:last-child { white-space: nowrap; color: var(--muted); }
+.plist { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.privacy .sub { font-size: 14px; }
+.pvendors { display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.55; color: var(--muted); }
+.pvendors > div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; }
+.pvendors b { color: var(--text); }

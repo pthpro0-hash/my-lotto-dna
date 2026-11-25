@@ -78,7 +78,7 @@ export function Login() {
             </div>
           </>
         )}
-        <p class="foot">기록·조회·재미 콘텐츠 서비스예요. 복권 판매나 구매 대행은 하지 않아요.<br />어떤 숫자든 1등 확률은 1/8,145,060로 같습니다 · 도박 문제 상담 1336</p>
+        <p class="foot">기록·조회·재미 콘텐츠 서비스예요. 복권 판매나 구매 대행은 하지 않아요.<br />어떤 숫자든 1등 확률은 1/8,145,060로 같습니다 · 도박 문제 상담 1336<br /><a href="#/privacy" style={{ color: "var(--muted)", textDecoration: "underline" }}>개인정보처리방침</a></p>
       </div>
     </div>
   );

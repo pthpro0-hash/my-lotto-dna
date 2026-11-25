@@ -46,8 +46,8 @@
 - "곧 나올 차례" 같은 도박사의 오류 표현 금지. 쉬는 숫자엔 "쉬어도 다음 확률은 같아요".
 - 'MBTI' 단어 사용 금지(국내 등록상표) → "성향 유형".
 
-## 현재 상태 (2026-11-25)
+## 현재 상태 (2026-11-26)
 - 완료: 엔진·서버 v2·웹앱 8화면·배포.
-- **막힌 문제: 로그인.** 무료 기본 메일은 링크만 보내고 시간당 몇 통 제한(429). 휴대폰에서 요청하고 PC에서 링크를 누르면 PC만 로그인됨.
-  - 해결안 A(권장): 사용자가 Resend 등 SMTP 가입 → Supabase Auth > Emails > SMTP 입력(사용자 직접) → 템플릿 'Magic link or OTP'·'Confirm sign up'에 `{{ .Token }}` 6자리 코드 표시 → Login.tsx를 코드 입력 중심으로.
-- 할 일: 실제 용지 QR 검증, 동행복권 데이터 이용 약관 확인, 법률 자문, 개인정보처리방침, Supabase 조직 'Grace period is over' 경고 확인.
+- 로그인 해결(2026-11-26): 커스텀 SMTP 연결 + 템플릿 'Magic link or OTP'·'Confirm sign up'에 `{{ .Token }}` 6자리 코드(`lotto-server/docs/email_otp_template.md`) + Login.tsx 코드 입력 중심(6자리 자동 확인, 재발송 60초). 휴대폰 실제 로그인 확인.
+- 할 일: 실제 용지 QR 검증, 동행복권 데이터 이용 약관 확인, 법률 자문, 개인정보처리방침.
+- Supabase 'Grace period is over' 경고: 사용자가 확인함, 직접 처리 예정 — Claude가 다시 권하지 말 것.

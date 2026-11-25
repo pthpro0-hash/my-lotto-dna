@@ -120,9 +120,10 @@ export function Me({ first }: { first: boolean }) {
           <button class="link" onClick={() => api.signOut()}>로그아웃</button>
           <button class="link danger" onClick={() => del(false)}>기록·프로필 전체 삭제</button>
           <button class="link danger" onClick={() => del(true)}>계정 삭제</button>
+          <a class="link" href="#/privacy">개인정보처리방침</a>
         </div>
       )}
-      <p class="foot">재미로 보는 콘텐츠 · 당첨과 무관 · 19세 이상 · 도박 문제 상담 1336</p>
+      <p class="foot">재미로 보는 콘텐츠 · 당첨과 무관 · 19세 이상 · 도박 문제 상담 1336{first && <><br /><a href="#/privacy" style={{ color: "var(--muted)", textDecoration: "underline" }}>개인정보처리방침</a></>}</p>
     </div>
   );
 }

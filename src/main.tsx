@@ -15,6 +15,7 @@ import { Stats } from "./screens/Stats";
 import { Check } from "./screens/Check";
 import { Duo } from "./screens/Duo";
 import { Log } from "./screens/Log";
+import { Privacy } from "./screens/Privacy";
 
 function useRoute() {
   // 로그인 메일 링크로 돌아오면 주소에 토큰(#access_token=…)이 붙음 → 화면 이름으로 쓰지 않음
@@ -56,6 +57,7 @@ function App() {
   }, []);
   useEffect(() => { if (session) reload(); else if (session === null) setProfile(undefined); }, [session?.user.id]);
 
+  if (route === "privacy") return <Privacy back={session ? "me" : ""} />; // 로그인 없이도 볼 수 있어야 함
   if (session === undefined) return <Spinner />;
   if (!session) return <Login />;
   if (failed) return <div class="page"><p class="sub">정보를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.</p><button class="btn ghost" onClick={reload}>다시 시도</button></div>;
