@@ -48,6 +48,12 @@
 
 ## 현재 상태 (2026-11-26)
 - 완료: 엔진·서버 v2·웹앱 8화면·배포.
-- 로그인 해결(2026-11-26): 커스텀 SMTP 연결 + 템플릿 'Magic link or OTP'·'Confirm sign up'에 `{{ .Token }}` 6자리 코드(`lotto-server/docs/email_otp_template.md`) + Login.tsx 코드 입력 중심(6자리 자동 확인, 재발송 60초). 휴대폰 실제 로그인 확인.
-- 할 일: 실제 용지 QR 검증, 동행복권 데이터 이용 약관 확인, 법률 자문, 개인정보처리방침.
+- 로그인 해결: 커스텀 SMTP(Resend) + 템플릿 'Magic link or OTP'·'Confirm sign up'에 `{{ .Token }}` 6자리 코드(`lotto-server/docs/email_otp_template.md`) + Login.tsx 코드 입력 중심. 휴대폰 실제 로그인 확인.
+- 개인정보처리방침 `#/privacy` 배포(로그인 없이 열람). 운영자·책임자·메일은 `src/config.ts` PRIVACY.
+- 기록 화면: QR 스캔 고도화(고해상도·가운데 틀 해석·2배 확대·플래시·내장 인식기), 회차별 기록 누르면 상세 펼침. 휴대폰 실기 확인 대기.
+- 오늘 화면 '쉬는 중' → '안 나온 기간'으로 변경.
+- 안내서(기능 요약 1장 + 매뉴얼): `docs/my-lotto-dna-guide.html`, 아티팩트 https://claude.ai/artifact/Gkeziw2zmitTEWQ3bJiQUa
+- lotto-server: 로컬 git 저장소(main, 원격 없음). 비공개 GitHub 백업은 사용자 결정 대기. **공개 저장소에 올리지 말 것.**
+- 할 일: 휴대폰에서 QR·상세 확인, 실제 용지 QR 검증, 동행복권 데이터 이용 약관 확인, 법률 자문.
 - Supabase 'Grace period is over' 경고: 사용자가 확인함, 직접 처리 예정 — Claude가 다시 권하지 말 것.
+- 참고: 2026-11-26 긴 세션에서 Claude Code가 메모리 부족으로 종료됨. 큰 작업은 새 세션에서 시작할 것.
