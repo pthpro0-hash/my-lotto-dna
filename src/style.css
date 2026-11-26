@@ -34,7 +34,7 @@ p { margin: 0; }
 .tag { font-size: 11px; color: var(--lime); border: 1px solid rgba(215,255,61,.35); border-radius: 999px; padding: 3px 9px; }
 
 .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-.chip { height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: transparent; color: var(--muted); font-size: 13px; cursor: pointer; }
+.chip { height: 36px; padding: 0 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: transparent; color: var(--muted); font-size: 13px; cursor: pointer; }
 .chip.on { border-color: transparent; background: var(--text); color: var(--bg); font-weight: 700; }
 .seg { display: flex; background: rgba(255,255,255,.06); border-radius: 12px; padding: 4px; }
 .seg button { flex: 1; height: 40px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); cursor: pointer; font-size: 14px; }

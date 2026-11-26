@@ -4,7 +4,7 @@ import { weatherGroup } from "../lib/fortune";
 import { todayFortune, todayKey, useApp } from "../state";
 import { Ball, ODDS } from "../ui";
 
-const MODES = [["all", "역대 출현"], ["rank", "순위"], ["gap", "쉬는 중"], ["recent", "최근 20회"]] as const;
+const MODES = [["all", "역대 출현"], ["rank", "순위"], ["gap", "안 나온 기간"], ["recent", "최근 20회"]] as const;
 const WX = { clear: "맑음", cloud: "흐림", rain: "비", snow: "눈", storm: "뇌우" };
 
 export function Today() {
