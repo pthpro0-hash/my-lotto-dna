@@ -58,6 +58,12 @@ export const api = {
   record: (drawNo: number, games: { numbers: number[]; mode: string }[], source: "qr" | "manual" | "fixed", dedupe?: string) =>
     rpc<any>("record_ticket", { p_draw_no: drawNo, p_games: games, p_source: source, p_dedupe_key: dedupe ?? null }),
   history: async () => { const { data, error } = await sb.from("my_history").select("*").order("draw_no", { ascending: false }).limit(20); if (error) throw toErr(error); return data ?? []; },
+  // 올해(한국 날짜 기준) 추첨 회차 전체의 지출·당첨금 합계용. 목록(최근 20회차)과 따로 불러와 연초 기록이 빠지지 않게 함
+  yearHistory: async (fromDrawNo: number, toDrawNo: number) => {
+    const { data, error } = await sb.from("my_history").select("draw_no,draw_date,spent,prize_total,status").gte("draw_no", fromDrawNo).lte("draw_no", toDrawNo);
+    if (error) throw toErr(error);
+    return (data ?? []) as { draw_no: number; draw_date: string; spent: number; prize_total: number | string; status: string }[];
+  },
   roundCard: (drawNo?: number) => rpc<any>("my_round_card", drawNo ? { p_draw_no: drawNo } : {}),
   exportData: () => rpc<any>("export_my_data"),
   deleteData: () => rpc("delete_my_data"),

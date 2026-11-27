@@ -181,6 +181,8 @@ export function Log() {
   const app = useApp();
   const [hist, setHist] = useState<any[] | null>(null);
   const [hits, setHits] = useState<any[] | null>(null);
+  // null = 불러오는 중, "error" = 실패. 불러온 해(y)를 같이 보관해 날짜가 바뀌어도 합계 기준이 어긋나지 않게 함
+  const [yearRows, setYearRows] = useState<{ y: number; m: number; rows: any[] } | "error" | null>(null);
   const [card, setCard] = useState<any>(null);
   const [sheet, setSheet] = useState<"qr" | "manual" | null>(null);
   const [open, setOpen] = useState<number | null>(null);
@@ -195,14 +197,24 @@ export function Log() {
   const load = () => {
     setDetail({});
     api.history().then(setHist).catch(() => setHist([]));
+    const { y, m } = today();
+    api.yearHistory(drawNoOnOrAfter({ y, m: 1, d: 1 }), drawNoOnOrAfter({ y: y + 1, m: 1, d: 1 }) - 1)
+      .then((rows) => setYearRows({ y, m, rows })).catch(() => setYearRows("error"));
     api.hits().then(setHits).catch(() => setHits([]));
     api.roundCard().then(setCard).catch(() => setCard(null));
   };
   useEffect(load, []);
   const refresh = () => { load(); app.reload(); };
-  const month = new Date().toISOString().slice(0, 7);
-  const spentMonth = (hist ?? []).filter((h) => String(h.draw_date).startsWith(month)).reduce((a, h) => a + (h.spent ?? 0), 0);
-  const prizeYear = (hist ?? []).filter((h) => String(h.draw_date).startsWith(month.slice(0, 4))).reduce((a, h) => a + Number(h.prize_total ?? 0), 0);
+  // 한국 날짜 기준 이번 달·올해. 추첨일이 속한 달·해로 묶음 (목록은 최근 20회차뿐이라 합계는 올해 전체를 따로 불러옴)
+  const sum = (key: "spent" | "prize_total", monthOnly: boolean) => {
+    if (yearRows === null || yearRows === "error") return yearRows;
+    const prefix = monthOnly ? `${yearRows.y}-${String(yearRows.m).padStart(2, "0")}` : String(yearRows.y);
+    return yearRows.rows.filter((h) => String(h.draw_date).startsWith(prefix)).reduce((a, h) => a + Number(h[key] ?? 0), 0);
+  };
+  const money = (v: number | "error" | null) => (v === null ? "…" : v === "error" ? "불러오지 못함" : won(v));
+  const spentMonth = sum("spent", true);
+  const spentYear = sum("spent", false);
+  const prizeYear = sum("prize_total", false);
   const avgHit = hits && hits.length ? hits.reduce((a, h) => a + h.hit, 0) / hits.length : null;
 
   return (
@@ -233,10 +245,15 @@ export function Log() {
         {avgHit !== null && <p style={{ fontSize: 13, color: "var(--sub)" }}>평균 {avgHit.toFixed(2)}개. 무작위로 고른 6개의 기댓값(0.8개)과 비교해 보세요.</p>}
       </div>
 
-      <div class="grid2">
-        <div class="card" style={{ gap: 2 }}><span class="small">이번 달 지출</span><b>{won(spentMonth)}</b></div>
-        <div class="card" style={{ gap: 2 }}><span class="small">올해 당첨금</span><b>{won(prizeYear)}</b></div>
+      <div class="grid3">
+        {([["이번 달 지출", spentMonth], ["올해 지출", spentYear], ["올해 당첨금", prizeYear]] as const).map(([label, v]) => (
+          <div class="card" style={{ gap: 2, padding: "12px 10px" }}>
+            <span class="small">{label}</span>
+            <b style={{ fontSize: 14, overflowWrap: "anywhere" }}>{money(v)}</b>
+          </div>
+        ))}
       </div>
+      <p class="small" style={{ marginTop: -4 }}>추첨일 기준으로 합산해요. 추첨 전 회차는 당첨금에 포함되지 않아요.</p>
 
       <div class="card">
         <h3>회차별 기록</h3>
